@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../Navbar/Navbar';
+import InventoryTable from '../InventoryTable/InventoryTable';
 import { Routes, Route } from 'react-router-dom';
 
 
@@ -8,7 +9,7 @@ const Layout = () => {
     <>
       <Navbar />
       <Routes>
-        <Route path="/create-inventory" element={<></>} />
+        <Route path="/" element={<InventoryTable />} />
         {/* other routes */}
       </Routes>
     </>
