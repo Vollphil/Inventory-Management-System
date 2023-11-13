@@ -1,19 +1,37 @@
 package com.example.InventoryManagementSystemBackend;
 
+import com.example.InventoryManagementSystemBackend.data.InventoryItem;
+import com.example.InventoryManagementSystemBackend.data.InventoryStatus;
+import com.example.InventoryManagementSystemBackend.repository.InventoryItemRepository;
 import com.example.InventoryManagementSystemBackend.util.ItemCategoryMappings;
 import com.example.InventoryManagementSystemBackend.util.ItemSupplierList;
 import com.example.InventoryManagementSystemBackend.util.RandomDateGenerator;
+import com.example.InventoryManagementSystemBackend.util.RandomInventoryStatus;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+@Component
 public class DataLoader implements CommandLineRunner {
+
+    private static final Logger logger = LoggerFactory.getLogger(DataLoader.class);
+
+
+    private InventoryItemRepository inventoryItemRepository;
+
+    public DataLoader(InventoryItemRepository inventoryItemRepository) {
+        this.inventoryItemRepository = inventoryItemRepository;
+    }
 
     @Override
     public void run(String... args) throws Exception {
+        loadRandomData();
 
     }
     private void loadRandomData(){
@@ -30,8 +48,20 @@ public class DataLoader implements CommandLineRunner {
             String supplier = suppliers.get(random.nextInt(suppliers.size()));
             LocalDate purchaseDate = RandomDateGenerator.generateRandomDate(startDate, endDate);
             LocalDate lastUpdated = RandomDateGenerator.generateRandomDate(purchaseDate, endDate);
+            InventoryStatus status = RandomInventoryStatus.getRandomStatus();
+            InventoryItem item = new InventoryItem();
+            item.setName(randomItemName);
+            item.setCategory(category);
+            item.setQuantity(quantity);
+            item.setPrice(price);
+            item.setSupplier(supplier);
+            item.setPurchaseDate(purchaseDate);
+            item.setLastUpdated(lastUpdated);
+            item.setStatus(status);
+            inventoryItemRepository.save(item);
 
 
         }
+        logger.info("Random data loading completed");
     }
 }
