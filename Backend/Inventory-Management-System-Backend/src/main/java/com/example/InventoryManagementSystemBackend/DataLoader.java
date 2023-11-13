@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,7 @@ public class DataLoader implements CommandLineRunner {
             String category = ItemCategoryMappings.getCategoryForItem(randomItemName);
             int quantity = random.nextInt(1,100);
             double price = random.nextDouble() * (1999.99 - 5.99) + 5.99;
+            BigDecimal formattedPrice = BigDecimal.valueOf(price).setScale(2, RoundingMode.HALF_UP);
             String supplier = suppliers.get(random.nextInt(suppliers.size()));
             LocalDate purchaseDate = RandomDateGenerator.generateRandomDate(startDate, endDate);
             LocalDate lastUpdated = RandomDateGenerator.generateRandomDate(purchaseDate, endDate);
@@ -53,7 +56,7 @@ public class DataLoader implements CommandLineRunner {
             item.setName(randomItemName);
             item.setCategory(category);
             item.setQuantity(quantity);
-            item.setPrice(price);
+            item.setPrice(formattedPrice.doubleValue());
             item.setSupplier(supplier);
             item.setPurchaseDate(purchaseDate);
             item.setLastUpdated(lastUpdated);
