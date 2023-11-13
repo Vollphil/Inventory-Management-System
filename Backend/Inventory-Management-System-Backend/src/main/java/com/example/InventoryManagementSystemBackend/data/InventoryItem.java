@@ -24,7 +24,6 @@ public class InventoryItem {
     private String category;
     private int quantity;
     private double price;
-    private String description;
     private String supplier;
     private LocalDate purchaseDate;
     @LastModifiedDate
