@@ -16,4 +16,8 @@
     public List<InventoryItem> findAll(){
     return inventoryItemRepository.findAll();
     }
+
+    public List<InventoryItem> findInventoryName(String inventoryName){
+            return inventoryItemRepository.findByNameContainingIgnoreCase(inventoryName);
+    }
     }
