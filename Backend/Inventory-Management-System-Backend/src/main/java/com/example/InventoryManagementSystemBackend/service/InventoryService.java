@@ -20,4 +20,7 @@
     public List<InventoryItem> findInventoryName(String inventoryName){
             return inventoryItemRepository.findByNameContainingIgnoreCase(inventoryName);
     }
+    public InventoryItem createInventoryItem(InventoryItem newInventoryItem){
+            return  inventoryItemRepository.save(newInventoryItem);
+    }
     }
