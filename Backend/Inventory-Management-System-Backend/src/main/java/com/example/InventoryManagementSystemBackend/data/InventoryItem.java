@@ -27,6 +27,6 @@ public class InventoryItem {
     private String supplier;
     private LocalDate purchaseDate;
     @LastModifiedDate
-    private LocalDate lastUpdated;
+        private LocalDate lastUpdated;
     private InventoryStatus status;
 }
