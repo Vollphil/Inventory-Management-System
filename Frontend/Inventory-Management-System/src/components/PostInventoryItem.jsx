@@ -1,5 +1,5 @@
 const PostInventoryItem = (inventoryName,inventoryCategory,inventoryQuantity,inventoryPrice,inventorySupplier,inventoryStatus) =>{
-    return fetch("http://localhost:8080/createItem",{
+    return fetch("http://localhost:8080/inventory/createItem",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body: JSON.stringify({name: inventoryName,
@@ -8,7 +8,8 @@ const PostInventoryItem = (inventoryName,inventoryCategory,inventoryQuantity,inv
             price: inventoryPrice,
             supplier:inventorySupplier,
             status: inventoryStatus})
-    }).then((res) => res.json());
+    }).then((res) => res.json())
+        
 
 }
 export default PostInventoryItem;

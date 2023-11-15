@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PostInventoryItem from "../components/PostInventoryItem";
+import CreateInventorySuccesModal from "../components/CreateInventorySuccessModal";
 
 const CreateInventoryItem = () => {
 const [inventoryName,setInventoryName] = useState("");
@@ -8,18 +10,33 @@ const [inventoryQuantity, setInventoryQuantity] = useState(0);
 const [inventoryPrice, setInventoryPrice] = useState(0.0);
 const [inventorySupplier, setInventorySupplier] = useState('');
 const [inventoryStatus, setInventoryStatus] = useState('AVAILABLE');
-
+const [showModal, setShowModal] = useState(false);
+const navigate = useNavigate();
 
 const handleStatusChange = (event) => {
     setInventoryStatus(event.target.value);
 };
 
+const handleCreateAnother = () => {
+    setShowModal(false); 
+   
+};
+const handleGoHome = () => {
+    navigate('/'); 
+};
 const handleSubmit =(e) => {
     e.preventDefault()
-    PostInventoryItem(inventoryName,inventoryCategory,inventoryQuantity,inventoryPrice,inventorySupplier,inventoryStatus);
+    PostInventoryItem(inventoryName,inventoryCategory,inventoryQuantity,inventoryPrice,inventorySupplier,inventoryStatus)
+    .then(() => {
+        setShowModal(true);
+    })
+    .catch((error) => {
+        console.error("Error posting inventory item:", error);
+    });
 }
     return(
         <div className="p-6 max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+             <form onSubmit={handleSubmit} className="p-6 max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
         <h1 className="text-2xl font-bold text-center mb-6">Create a new Inventory Item</h1>
         <div className="space-y-4">
             <div>
@@ -82,15 +99,17 @@ const handleSubmit =(e) => {
                     <option value="DISCONTINUED">Discontinued</option>
                 </select>
             </div>
-            <button
             
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                onClick={handleSubmit}
-            >
-                Create
-            </button>
+           
+                
+                <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Create
+                </button>
+            
+        
         </div>
+        </form>
+            {showModal && <CreateInventorySuccesModal onCreateAnother={handleCreateAnother} onGoHome={handleGoHome} />}
     </div>
     )
 }
