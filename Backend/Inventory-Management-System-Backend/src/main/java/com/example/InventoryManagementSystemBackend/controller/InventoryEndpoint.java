@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("inventory")
@@ -29,5 +30,10 @@ public class InventoryEndpoint {
     @PostMapping("/createItem")
     InventoryItem save(@RequestBody InventoryItem newInventoryItem) {
         return inventoryService.createInventoryItem(newInventoryItem);
+    }
+
+    @PatchMapping("/updateItem/{id}")
+    InventoryItem updateItem(@PathVariable Long id, @RequestBody Map<String, Object> updateFields){
+       return inventoryService.updateInventoryItem(id,updateFields);
     }
 }
