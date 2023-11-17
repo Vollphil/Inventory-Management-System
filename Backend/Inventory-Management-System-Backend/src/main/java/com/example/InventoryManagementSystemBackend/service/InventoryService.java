@@ -60,7 +60,7 @@ public class InventoryService {
                     item.setSupplier((String) value);
                     break;
                 case "status":
-                    item.setStatus((InventoryStatus) value);
+                    item.setStatus(InventoryStatus.valueOf((String) value));
 
             }
         });
