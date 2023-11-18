@@ -2,10 +2,13 @@ import { useEffect, useState } from "react"
 import GetAllInventoryItems from "../components/GetAllInventoryItems";
 import GetInventoryItemByName from "../components/GetInvenoryItemByName";
 import UpdateInventoryModal from "../components/UpdateInventoryModal";
+import DeletePopUpModal from "../components/DeletePopUpModal";
+
 const InventoryTable = () => {
 const [inventoryData,setInventoryData] = useState([]);
 const [showUpdateModal, setShowUpdateModal] = useState(false);
-const [selectedItemForUpdate, setSelectedItemForUpdate] = useState(null);
+const [showDeleteModal,setShowDeleteModal]=useState(false);
+const [selectedItem, setSelectedItem] = useState(null);
 
 const fetchInventoryData = () => {
     GetAllInventoryItems(setInventoryData);
@@ -18,10 +21,14 @@ useEffect(() => {
 },[]);
 
 const handleUpdateClick = (item) => {
-    setSelectedItemForUpdate(item);
+    setSelectedItem(item);
     setShowUpdateModal(true);
 }
-
+const handleDeleteClick =(item) =>{
+    console.log("Delete clicked for item: ", item);
+    setSelectedItem(item);
+    setShowDeleteModal(true);
+}
 
 const handleNameSearch= (event) => {
     const query = event.target.value;
@@ -65,17 +72,24 @@ const handleNameSearch= (event) => {
                                 <td className="border-separate border border-slate-400 py-4 px-6 text-center">{inventory.lastUpdated}</td>
                                 <td className="border-separate border border-slate-400 py-4 px-6 text-center">{inventory.status}</td>
                                 <td className="border-separate border border-slate-400 py-4 px-6 text-center"><button type ="button" onClick={() => handleUpdateClick(inventory)} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Update</button></td>
-                                <td className="border-separate border border-slate-400 py-4 px-6 text-center"><button className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Delete</button></td>
+                                <td className="border-separate border border-slate-400 py-4 px-6 text-center"><button type="button" onClick={() => handleDeleteClick(inventory)} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Delete</button></td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                {showUpdateModal && selectedItemForUpdate && (
+                {showUpdateModal && selectedItem && (
             <UpdateInventoryModal 
-                item={selectedItemForUpdate} 
+                item={selectedItem} 
                 onCancel={() => setShowUpdateModal(false)}
-                onUpdated={fetchInventoryData}
+                onSuccess={fetchInventoryData}
             />
+        )}
+        {showDeleteModal && selectedItem && (
+        <DeletePopUpModal
+         id={selectedItem.id}
+         onCancel={() => setShowDeleteModal(false)}
+         onSuccess={fetchInventoryData}
+         />
         )}
             </div>
     )

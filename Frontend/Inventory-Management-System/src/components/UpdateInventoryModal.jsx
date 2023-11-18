@@ -3,7 +3,7 @@ import PatchInventoryItem from "./PatchInventoryItem";
 import PropTypes from 'prop-types';
 
 
-  const UpdateInventoryModal = ({item,onCancel,onUpdated}) => {
+  const UpdateInventoryModal = ({item,onCancel,onSuccess}) => {
     const [updateName,setUpdateName] = useState(item.name);
     const [updateCategory,setUpdateCategory] = useState(item.category);
     const [updateQuantity, setUpdateQuantity] = useState(item.quantity);
@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
           status: PropTypes.string.isRequired,
         }).isRequired,
         onCancel: PropTypes.func.isRequired,
-        onUpdated: PropTypes.func.isRequired
+        onSuccess: PropTypes.func.isRequired
       };
 
     const handleCancel = () => {
@@ -48,8 +48,8 @@ import PropTypes from 'prop-types';
         };   
          PatchInventoryItem(item.id, updatedFields)
         .then(() => {
-            if(onUpdated){
-                onUpdated();
+            if(onSuccess){
+                onSuccess();
             }
                                 onCancel();
         })
