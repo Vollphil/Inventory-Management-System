@@ -67,4 +67,8 @@ public class InventoryService {
         item.setLastUpdated(currentDate);
         return inventoryItemRepository.save(item);
     }
+
+    public void deleteById(Long id) {
+        inventoryItemRepository.deleteById(id);
+    }
 }

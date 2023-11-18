@@ -2,6 +2,7 @@ package com.example.InventoryManagementSystemBackend.controller;
 
 import com.example.InventoryManagementSystemBackend.data.InventoryItem;
 import com.example.InventoryManagementSystemBackend.service.InventoryService;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,12 @@ public class InventoryEndpoint {
     }
 
     @PatchMapping("/updateItem/{id}")
-    InventoryItem updateItem(@PathVariable Long id, @RequestBody Map<String, Object> updateFields){
-       return inventoryService.updateInventoryItem(id,updateFields);
+    InventoryItem updateItem(@PathVariable Long id, @RequestBody Map<String, Object> updateFields) {
+        return inventoryService.updateInventoryItem(id, updateFields);
+    }
+
+    @DeleteMapping("/deleteItem/{id}")
+    void deleteItemById(@PathVariable Long id) {
+        inventoryService.deleteById(id);
     }
 }
