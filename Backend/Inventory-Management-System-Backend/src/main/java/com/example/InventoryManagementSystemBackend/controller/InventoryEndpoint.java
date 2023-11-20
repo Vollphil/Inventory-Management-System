@@ -24,8 +24,8 @@ public class InventoryEndpoint {
     }
 
     @GetMapping("/searchName")
-    List<InventoryItem> findInventoryName(@RequestParam String name) {
-        return inventoryService.findInventoryName(name);
+    List<InventoryItem> findInventoryName(@RequestParam String name,@RequestParam(required = false, defaultValue = "asc") String sort) {
+        return inventoryService.findInventoryName(name,sort);
     }
 
     @PostMapping("/createItem")

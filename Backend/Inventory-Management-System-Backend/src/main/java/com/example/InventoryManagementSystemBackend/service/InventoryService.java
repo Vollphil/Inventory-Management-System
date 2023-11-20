@@ -4,6 +4,7 @@ import com.example.InventoryManagementSystemBackend.data.InventoryItem;
 import com.example.InventoryManagementSystemBackend.data.InventoryStatus;
 import com.example.InventoryManagementSystemBackend.repository.InventoryItemRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,8 +24,14 @@ public class InventoryService {
         return inventoryItemRepository.findAll();
     }
 
-    public List<InventoryItem> findInventoryName(String inventoryName) {
-        return inventoryItemRepository.findByNameContainingIgnoreCase(inventoryName);
+    public List<InventoryItem> findInventoryName(String inventoryName, String sortDirection) {
+        Sort sort = Sort.by("name");
+        if ("desc".equalsIgnoreCase(sortDirection)) {
+            sort = sort.descending();
+        } else {
+            sort = sort.ascending();
+        }
+        return inventoryItemRepository.findByNameContainingIgnoreCase(inventoryName, sort);
     }
 
     public InventoryItem createInventoryItem(InventoryItem newInventoryItem) {
