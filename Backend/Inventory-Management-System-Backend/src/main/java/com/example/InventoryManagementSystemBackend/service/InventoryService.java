@@ -20,19 +20,19 @@ public class InventoryService {
         this.inventoryItemRepository = inventoryItemRepository;
     }
 
-    public List<InventoryItem> findAll() {
-        return inventoryItemRepository.findAll();
+    public List<InventoryItem> findAll(String sortDirection) {
+        Sort sort = Sort.unsorted();
+        if (sortDirection != null && !sortDirection.isEmpty()) {
+            sort = "desc".equalsIgnoreCase(sortDirection) ? Sort.by("name").descending() : Sort.by("name").ascending();
+        }
+        return inventoryItemRepository.findAll(sort);
     }
 
-    public List<InventoryItem> findInventoryName(String inventoryName, String sortDirection) {
-        Sort sort = Sort.by("name");
-        if ("desc".equalsIgnoreCase(sortDirection)) {
-            sort = sort.descending();
-        } else {
-            sort = sort.ascending();
-        }
-        return inventoryItemRepository.findByNameContainingIgnoreCase(inventoryName, sort);
+
+    public List<InventoryItem> findInventoryName(String inventoryName) {
+        return inventoryItemRepository.findByNameContainingIgnoreCase(inventoryName);
     }
+
 
     public InventoryItem createInventoryItem(InventoryItem newInventoryItem) {
         LocalDate currentDate = LocalDate.now();
