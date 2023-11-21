@@ -10,7 +10,7 @@ const [showUpdateModal, setShowUpdateModal] = useState(false);
 const [showDeleteModal,setShowDeleteModal]=useState(false);
 const [selectedItem, setSelectedItem] = useState(null);
 const [sortOrder, setSortOrder] = useState("asc");
-const [currentSearchQuery, setCurrentSearchQuery] = useState("");
+
 
 const fetchInventoryData = (sortOrder = 'asc') => {
     console.log("Fetching inventory data with sort order:", sortOrder);
@@ -34,9 +34,9 @@ const handleDeleteClick =(item) =>{
 
 const handleNameSearch= (event) => {
     const query = event.target.value;
-    setCurrentSearchQuery(query);
+    
     if(query.length >= 2){
-    GetInventoryItemByName(query,setInventoryData, sortOrder);
+    GetInventoryItemByName(query,setInventoryData);
     }else{
         GetAllInventoryItems(setInventoryData);
     }
@@ -44,12 +44,8 @@ const handleNameSearch= (event) => {
 const handleSortToggle = () => {
     const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
-    console.log("New sort order:", newSortOrder);
-    if (currentSearchQuery) {
-        GetInventoryItemByName(currentSearchQuery, setInventoryData, newSortOrder);
-    } else {
-        GetAllInventoryItems(setInventoryData, newSortOrder);
-    }
+    GetAllInventoryItems(setInventoryData, newSortOrder);
+    
 };
 
     return(
@@ -61,7 +57,7 @@ const handleSortToggle = () => {
                 <input type="text" onChange={handleNameSearch} placeholder="Search Inventory" className=" px-4 py-2 border border-grey-300 rounded-lg text-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder-gray-400 w-full sm:w-auto"></input>
                 </div>
                 
-                <button type="button"  onClick={handleSortToggle} className="py-2 px-4 rounded bg-red-500 text-white">Cancel</button>
+               
                 <table className="border-separate border border-slate-400 w-full text-base text-gray-800 dark:text-gray-200">
                     <thead className= "text-lg text-gray-900 uppercase bg-indigo-50 dark:bg-gray-700 dark:text-gray-200">
                         <tr>
