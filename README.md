@@ -16,3 +16,31 @@ Backend: Java with Spring Boot
 Database: PostgreSQL
 Styling: Tailwind CSS
 Version Control: Git
+
+
+No, it doesn't have to be that detailed. The level of detail in your README should be tailored to your audience. If your users are familiar with Docker and general deployment practices, you can simplify the instructions. Here's a more concise version:
+
+Docker Deployment Instructions
+Quick Start
+Clone the Repository:
+
+bash
+Copy code
+git clone git@github.com:Vollphil/Inventory-Management-System.git
+
+Set Environment Variables:
+Create a .env file in the project root with necessary environment variables (e.g., database credentials). Add this file to .gitignore.
+
+Build and Run with Docker Compose:
+
+css
+Copy code
+docker-compose up --build
+Access the Application:
+
+Frontend: http://localhost:5173
+Backend: http://localhost:8080 (if applicable)
+To Stop:
+
+Copy code
+docker-compose down

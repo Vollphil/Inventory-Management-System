@@ -42,8 +42,10 @@ public class DataLoader implements CommandLineRunner {
         List<String> suppliers = new ArrayList<>(ItemSupplierList.getAllSuppliers());
         LocalDate startDate = LocalDate.of(2018, 1, 1);
         LocalDate endDate = LocalDate.now();
-        for (int i = 0; i < 29; i++) {
-            String randomItemName = itemNames.get(random.nextInt(itemNames.size()));
+        for (int i = 0; i < 29 && !itemNames.isEmpty(); i++) {
+            int randomIndex = random.nextInt(itemNames.size());
+            String randomItemName = itemNames.get(randomIndex);
+            itemNames.remove(randomIndex);
             String category = ItemCategoryMappings.getCategoryForItem(randomItemName);
             int quantity = random.nextInt(1,100);
             double price = random.nextDouble() * (1999.99 - 5.99) + 5.99;
