@@ -12,10 +12,21 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
-
+/**
+ * Security configuration class for the application.
+ * Configures CORS, CSRF, and security rules for HTTP requests.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+    /**
+     * Configures the HTTP security chain.
+     * Disables CSRF, configures CORS, sets session management to stateless and enables HTTP Basic authentication.
+     *
+     * @param http HttpSecurity object to configure.
+     * @return Configured SecurityFilterChain.
+     * @throws Exception In case of configuration errors.
+     */
 
 @Bean
 SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -27,6 +38,12 @@ SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
             .build();
 }
 
+    /**
+     * Bean definition for CORS configuration source.
+     * Specifies allowed origins, methods, and headers for CORS.
+     *
+     * @return CorsConfigurationSource with the defined settings.
+     */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

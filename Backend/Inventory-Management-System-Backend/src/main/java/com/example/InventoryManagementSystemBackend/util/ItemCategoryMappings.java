@@ -2,10 +2,15 @@ package com.example.InventoryManagementSystemBackend.util;
 
 import java.util.Map;
 import java.util.Set;
-
+/**
+ * Utility class to map item names to their respective categories.
+ * Provides static methods to retrieve item categories and item names.
+ */
 public class ItemCategoryMappings {
 
+    // Static map defining the mappings between item names and their categories.
     private static final Map<String, String> itemNameToCategory = Map.ofEntries(
+            // Entries mapping item names to categories
             Map.entry("Laptop", "Electronics"),
             Map.entry("Desk", "Furniture"),
             Map.entry("Printer", "Electronics"),
@@ -40,6 +45,12 @@ public class ItemCategoryMappings {
     public static String getCategoryForItem(String itemName) {
         return itemNameToCategory.get(itemName);
     }
+    /**
+     * Retrieves a set of all item names.
+     * Useful for enumeration or validation purposes.
+     *
+     * @return Set of all item names in the map.
+     */
     public static Set<String> getAllItemNames() {
         return itemNameToCategory.keySet();
     }

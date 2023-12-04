@@ -19,6 +19,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+/**
+ * DataLoader component to pre-load the database with random inventory data.
+ * Implements CommandLineRunner to run immediately after the application starts.
+ */
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -27,15 +31,30 @@ public class DataLoader implements CommandLineRunner {
 
     private InventoryItemRepository inventoryItemRepository;
 
+    /**
+     * Constructor for DataLoader.
+     *
+     * @param inventoryItemRepository The repository for inventory item operations.
+     */
     public DataLoader(InventoryItemRepository inventoryItemRepository) {
         this.inventoryItemRepository = inventoryItemRepository;
     }
 
+    /**
+     * Overrides the run method to execute data loading on application start.
+     *
+     * @param args The command line arguments.
+     * @throws Exception In case of errors during data loading.
+     */
     @Override
     public void run(String... args) throws Exception {
         loadRandomData();
 
     }
+    /**
+     * Loads random data into the inventory.
+     * Generates random inventory items and saves them to the repository.
+     */
     private void loadRandomData(){
         Random random = new Random();
         List<String> itemNames = new ArrayList<>(ItemCategoryMappings.getAllItemNames());
@@ -43,6 +62,7 @@ public class DataLoader implements CommandLineRunner {
         LocalDate startDate = LocalDate.of(2018, 1, 1);
         LocalDate endDate = LocalDate.now();
         for (int i = 0; i < 29 && !itemNames.isEmpty(); i++) {
+            // Generate random item details
             int randomIndex = random.nextInt(itemNames.size());
             String randomItemName = itemNames.get(randomIndex);
             itemNames.remove(randomIndex);
